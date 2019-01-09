@@ -1,1 +1,2 @@
-Here, You should create a directory with your ONID similar to instructor's ONID.
+# CS362-W2019
+Software Engineering (CS 362) class's master repository for Winter 2019.
