@@ -1,0 +1,130 @@
+        -:    0:Source:cardtest4.c
+        -:    0:Graph:cardtest4.gcno
+        -:    0:Data:cardtest4.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:/*
+        -:    2: * cardtest4.c
+        -:    3: *
+        -:    4: The Villager card allows 
+        -:    5: 
+        -:    6: */
+        -:    7:
+        -:    8:/*
+        -:    9: * Include the following lines in your makefile:
+        -:   10: *
+        -:   11: * cardtest4: cardtest4.c dominion.o rngs.o
+        -:   12: *      gcc -o cardtest1 -g  cardtest4.c dominion.o rngs.o $(CFLAGS)
+        -:   13: */
+        -:   14:
+        -:   15:
+        -:   16:#include "dominion.h"
+        -:   17:#include "dominion_helpers.h"
+        -:   18:#include <string.h>
+        -:   19:#include <stdio.h>
+        -:   20:#include <assert.h>
+        -:   21:#include "rngs.h"
+        -:   22:#include <stdlib.h>
+        -:   23:
+        -:   24:#define TESTCARD "villager"
+        -:   25:
+        1:   26:int main() {
+        -:   27:    
+        -:   28:    int returnValue;
+        -:   29:    struct gameState G;
+        -:   30:    //change these variables to test
+        1:   31:    int players=2;
+        1:   32:    int randomSeed=1;
+        1:   33:    int hand[10]={curse, smithy, mine, gardens, great_hall, salvager, sea_hag, adventurer, silver, gold};
+        -:   34:    //int initializeGame(int numPlayers, int kingdomCards[10], int randomSeed, struct gameState *state)
+        -:   35:    //create a hand to pass in
+        -:   36:    
+        1:   37:    int player1=G.whoseTurn;
+        -:   38:    int player2;
+        1:   39:    int actions=G.numActions;
+        -:   40:    int actions2;
+        1:   41:    int handCount1=G.handCount[1];
+        -:   42:    int handCount2;
+        1:   43:    int deckCountInitial= G.deckCount[1];
+        -:   44:    int deckCountInitial2;
+        -:   45:    //if game is created, print 
+        1:   46:    returnValue=initializeGame(players,hand,randomSeed, &G);
+        1:   47:    assert(returnValue == 0);
+        -:   48:    {
+        1:   49:    printf("Card Test 4:\n");
+        1:   50:    printf("Villager:\n");
+        1:   51:    printf("**Gamestate Created**\n");  
+        1:   52:    printf("\n");
+        -:   53:    }    
+        -:   54:    
+        -:   55:    //call the card
+        1:   56:    returnValue=cardEffect(great_hall, 0, 0, 0, &G, 10, 0);
+        -:   57:    
+        1:   58:    player2=G.whoseTurn;
+        1:   59:    actions2=G.numActions;
+        1:   60:    handCount2=G.handCount[1];
+        1:   61:    deckCountInitial2= G.deckCount[1];
+        -:   62:    
+        1:   63:    if(returnValue==0){
+        1:   64:    printf("Pass: Card ran successfully");
+        1:   65:        printf("\n");}
+        -:   66:    
+        1:   67:    if(returnValue!=0){
+    #####:   68:    printf("FAIL: Card did not run successfully");
+    #####:   69:     printf("\n");}  
+        -:   70:    
+        -:   71:    
+        -:   72:    
+        1:   73:    if(handCount2>(handCount1)){
+    #####:   74:        printf("PASS: Hand size was increased");
+    #####:   75:        printf("\n");
+        -:   76:    }
+        -:   77:    
+        1:   78:    if(handCount2==handCount1){
+        1:   79:        printf("FAIL: Hand size was not increased");
+        1:   80:        printf("\n");
+        -:   81:    }
+        -:   82:    
+        1:   83:    if(handCount2<=(handCount1+1)){
+        1:   84:        printf("PASS: Hand size was decreased");
+        1:   85:        printf("\n");
+        -:   86:    }
+        -:   87:    
+        -:   88:    //still same palyer is active
+        1:   89:    if(player1==player2){
+        1:   90:    printf("PASS: Same Player is Active");
+        1:   91:    printf("\n");
+        -:   92:    }
+        -:   93:    
+        1:   94:    if(player1!=player2){
+    #####:   95:    printf("FAIL: Same Player is not Active");
+    #####:   96:    printf("\n");
+        -:   97:    }       
+        -:   98:    
+        -:   99:    
+        1:  100:    if(actions==actions2){
+        1:  101:    printf("PASS: Same number of actions left");
+        1:  102:    printf("\n");}
+        -:  103:        
+        1:  104:     if(actions!=actions2){
+    #####:  105:    printf("FAIL: Same number of actions left");
+    #####:  106:    printf("\n");} 
+        -:  107:    
+        -:  108:    //deck count decreased    
+        1:  109:    if(deckCountInitial>deckCountInitial2) {
+    #####:  110:    printf("Pass: Deck was decreased");
+    #####:  111:    printf("\n");}
+        -:  112:        
+        1:  113:    if(deckCountInitial<deckCountInitial2) {
+        1:  114:    printf("FAIL: Deck was NOT decreased");
+        -:  115:    }
+        -:  116:    
+        -:  117:    
+        -:  118:    
+        1:  119:    printf("\n >>>>> SUCCESS: Testing complete %s <<<<<\n\n", TESTCARD);
+        -:  120:    
+        1:  121:return 0;    
+        -:  122:    
+        -:  123:}
+        -:  124:
+        -:  125:

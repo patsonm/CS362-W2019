@@ -1,0 +1,63 @@
+        -:    0:Source:unittest3.c
+        -:    0:Graph:unittest3.gcno
+        -:    0:Data:unittest3.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:/*TThis unit tests the shuffle ability
+        -:    2:*/
+        -:    3:
+        -:    4:#include "dominion.h"
+        -:    5:#include <stdio.h>
+        -:    6:#include "rngs.h"
+        -:    7:#include <stdlib.h>
+        -:    8:#include "dominion_helpers.h"
+        -:    9:#include "assert.h"
+        -:   10:
+        -:   11:
+        1:   12:int main(int argc, char ** argv){
+        -:   13:    int returnValue, returnValue2;
+        -:   14:    
+        -:   15:    struct gameState G;
+        -:   16:    //change these variables to test
+        1:   17:    int players=2;
+        1:   18:    int randomSeed=1;
+        1:   19:    int hand[10]={curse, smithy, mine, gardens, great_hall, salvager, sea_hag, adventurer, silver, gold};
+        -:   20:    //int initializeGame(int numPlayers, int kingdomCards[10], int randomSeed, struct gameState *state)
+        -:   21:    //create a hand to pass in
+        -:   22:    
+        -:   23:     //if game is created, print 
+        1:   24:    returnValue=initializeGame(players,hand,randomSeed, &G);
+        1:   25:    if(returnValue == 0){
+        -:   26:    {
+        1:   27:    printf("Unit Test 3:\n");
+        1:   28:    printf("**Gamestate Created**\n");  
+        1:   29:    printf("\n");
+        -:   30:    }
+        -:   31:    
+        -:   32:    //test a valid number
+        1:   33:    G.deckCount[1] = 5;
+        1:   34:	returnValue2 = shuffle(1, &G);
+        1:   35:	if (returnValue2 == 0)
+        -:   36:    {
+        1:   37:    printf("Deck was shuffled succesfully\n");
+        1:   38:    printf("\n");
+        -:   39:    }
+        -:   40:    
+        -:   41:    //test a bad value for the deck size
+        -:   42:    //a negative value should return 1
+        1:   43:	G.deckCount[1] = -5;
+        1:   44:	returnValue2 = shuffle(1, &G);
+        -:   45:    
+        1:   46:	if (returnValue2 == -1)
+        -:   47:    {
+        1:   48:    printf("Deck was shuffled succesfully\n");
+        1:   49:    printf("\n");
+        -:   50:    }
+        -:   51:    }
+        -:   52:    //test was a success
+        1:   53:     printf("This test was a success");
+        1:   54:    printf("\n");
+        1:   55:    printf("\n");
+        1:   56:  return 0;
+        -:   57:}
+        -:   58:
