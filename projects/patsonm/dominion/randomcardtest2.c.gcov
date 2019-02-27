@@ -20,7 +20,7 @@
         -:   15:    
         -:   16:    
         -:   17:     //set num of teset here
-        1:   18:    int numTest=100;
+        1:   18:    int numTest=5000;
         -:   19:    
         -:   20:    //variables for counting results
         1:   21:    int gameStateCreated=0;
@@ -40,7 +40,7 @@
         -:   35:    struct gameState S;
         -:   36:    
         -:   37:    
-      101:   38:    for (int z=0; z < numTest; z++){
+     5001:   38:    for (int z=0; z < numTest; z++){
         -:   39:    
         -:   40:    
         -:   41:    
@@ -50,96 +50,96 @@
         -:   45:    //select random amount of players between 2 and 4
         -:   46:    //per dominip rules
         -:   47:    int r, n, k;
-      100:   48:    n=4;
-      100:   49:    k=2;
-      100:   50:    r = rand() % (n + 1) + k;
-      100:   51:    int players=r;
+     5000:   48:    n=4;
+     5000:   49:    k=2;
+     5000:   50:    r = rand() % (n + 1) + k;
+     5000:   51:    int players=r;
         -:   52:    
         -:   53:    
         -:   54:    //select random seed between 1-500
         -:   55:    
-      100:   56:    n=500;
-      100:   57:    k=1;
-      100:   58:    r = rand() % (n + 1) + k;
+     5000:   56:    n=500;
+     5000:   57:    k=1;
+     5000:   58:    r = rand() % (n + 1) + k;
         -:   59:    
-      100:   60:    int randomSeed=r;
-      100:   61:    int hand[10]={curse, smithy, mine, gardens, great_hall, salvager, sea_hag, adventurer, silver, gold};
+     5000:   60:    int randomSeed=r;
+     5000:   61:    int hand[10]={curse, smithy, mine, gardens, great_hall, salvager, sea_hag, adventurer, silver, gold};
         -:   62:    //int initializeGame(int numPlayers, int kingdomCards[10], int randomSeed, struct gameState *state)
         -:   63:    //create a hand to pass in
         -:   64:    
         -:   65:    
         -:   66:    //if game is created, print 
-      100:   67:    returnValue=initializeGame(players,hand,randomSeed, &G);
+     5000:   67:    returnValue=initializeGame(players,hand,randomSeed, &G);
         -:   68:    
-      100:   69:    if(returnValue == 0)
+     5000:   69:    if(returnValue == 0)
         -:   70:    {
-       57:   71:    gameStateCreated++;
+     2983:   71:    gameStateCreated++;
         -:   72:    //printf("**Gamestate Created**\n");  
         -:   73:    //printf("\n");
         -:   74:    }    
         -:   75:        
         -:   76:    
-      100:   77:    int player1=G.whoseTurn;
+     5000:   77:    int player1=G.whoseTurn;
         -:   78:    int player2;
-      100:   79:    int actions=G.numActions;
+     5000:   79:    int actions=G.numActions;
         -:   80:    int actions2;
-      100:   81:    int handCount1=G.handCount[1];
+     5000:   81:    int handCount1=G.handCount[1];
         -:   82:    int handCount2;
         -:   83:    //same player
         -:   84:    //+1 Card (increase hand)
         -:   85:    //+1 Action(increase action)
         -:   86:    int result;
-      100:   87:    result= cardEffect(great_hall, 0, 0, 0, &G, 10, 0);
+     5000:   87:    result= cardEffect(great_hall, 0, 0, 0, &G, 10, 0);
         -:   88:     //set gamestates equal
-      100:   89:    S=G;
-      100:   90:    if(result==0){
+     5000:   89:    S=G;
+     5000:   90:    if(result==0){
         -:   91:    //printf("PASS: Greathall ran");
         -:   92:        //printf("\n");
-      100:   93:        GreatHallRun++;
+     5000:   93:        GreatHallRun++;
         -:   94:    }
         -:   95:        
         -:   96:        
-      100:   97:    if(result!=0){
+     5000:   97:    if(result!=0){
         -:   98:    //printf("Fail: Greathall ran");
         -:   99:        //printf("\n");
     #####:  100:        GreatHallNotRun++;
         -:  101:    }    
         -:  102:    
-      100:  103:    player2=S.whoseTurn;
-      100:  104:    if(player1==player2){
+     5000:  103:    player2=S.whoseTurn;
+     5000:  104:    if(player1==player2){
         -:  105:    //printf("PASS: Same Player is Active");
         -:  106:    //printf("\n");
-      100:  107:    sameplayer++;
+     5000:  107:    sameplayer++;
         -:  108:    }
         -:  109:    
-      100:  110:    if(player1!=player2){
+     5000:  110:    if(player1!=player2){
         -:  111:    //printf("FAIL: Same Player is Active");
         -:  112:    //printf("\n");
     #####:  113:    differentplayer++;
         -:  114:    } 
         -:  115:        
-      100:  116:    actions2=S.numActions;
-      100:  117:    if(actions==actions2){
+     5000:  116:    actions2=S.numActions;
+     5000:  117:    if(actions==actions2){
         -:  118:    //printf("PASS: Same number of actions left");
         -:  119:    //printf("\n");
     #####:  120:        actionsSame++;
         -:  121:    }
         -:  122:        
-      100:  123:     if(actions!=actions2){
+     5000:  123:     if(actions!=actions2){
         -:  124:    //printf("FAIL: Same number of actions left");
         -:  125:    //printf("\n");
-      100:  126:         actionsDifferent++;
+     5000:  126:         actionsDifferent++;
         -:  127:     }    
         -:  128:    
-      100:  129:    handCount2=S.handCount[1];
-      100:  130:    if(handCount2<=handCount1){
+     5000:  129:    handCount2=S.handCount[1];
+     5000:  130:    if(handCount2<=handCount1){
         -:  131:    //printf("PASS: Hand Count has equal, one card removed");
         -:  132:    //printf("\n");
-      100:  133:        handEqual++;
+     5000:  133:        handEqual++;
         -:  134:    
         -:  135:    }
         -:  136:        
-      100:  137:    if(handCount2>handCount1){
+     5000:  137:    if(handCount2>handCount1){
         -:  138:    //printf("FAIL: Hand Count has increased");
         -:  139:    //printf("\n");
     #####:  140:        handDecreased++;

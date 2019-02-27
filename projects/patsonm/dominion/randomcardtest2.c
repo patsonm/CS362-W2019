@@ -15,7 +15,7 @@ int main(){
     
     
      //set num of teset here
-    int numTest=100;
+    int numTest=5000;
     
     //variables for counting results
     int gameStateCreated=0;

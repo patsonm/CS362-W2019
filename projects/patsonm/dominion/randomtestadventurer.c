@@ -19,7 +19,7 @@
 int main()
 {
     //set num of test here
-    int numTest =100;
+    int numTest =5000;
     
     //game counter varaibles
     int gameStateCreated=0;
@@ -75,7 +75,7 @@ int main()
 	//check card value has changed
     
 	
-    returnValue=cardEffect(great_hall, 0, 0, 0, &G, 10, 0);
+    returnValue=cardEffect(adventurer, 0, 0, 0, &G, 10, 0);
     if(returnValue==0){
     //printf("Pass: Card ran successfully");
         cardRun++;
@@ -126,7 +126,7 @@ int main()
     printf("Random Card Test :\n");
     printf("Adventure :\n");
     printf("The Test was run %d times\n", numTest);
-    printf("Game States Created:  %d\n", gameStateCreated);
+    //printf("Game States Created:  %d\n", gameStateCreated);
     printf("Card was successfully run:  %d\n", cardRun);
     printf("Card was UNsuccessfully run:  %d\n", cardRunFail);
    printf("Two cards were successfully drawn:  %d\n", cardFunction);
