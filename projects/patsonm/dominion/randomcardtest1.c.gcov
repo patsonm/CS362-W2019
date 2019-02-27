@@ -1,0 +1,163 @@
+        -:    0:Source:randomcardtest1.c
+        -:    0:Graph:randomcardtest1.gcno
+        -:    0:Data:randomcardtest1.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1://testcard for smithy
+        -:    2:
+        -:    3:#include "dominion.h"
+        -:    4:#include <stdio.h>
+        -:    5:#include "rngs.h"
+        -:    6:#include <stdlib.h>
+        -:    7:#include "dominion_helpers.h"
+        -:    8:#include "assert.h"
+        -:    9:#include <time.h>
+        -:   10:
+        -:   11:#define TESTCARD "smithy"
+        -:   12:
+        -:   13:
+        1:   14:int main()
+        -:   15:{
+        -:   16:    //set num of test here
+        1:   17:    int numTest =5000;
+        -:   18:    
+        -:   19:    //variables for checking game
+        -:   20:    int gameStateCreated, smithyRun, smithyNotRun, handIncreased, handDecreased, handEqual, sameplayer, differentplayer, deckDecrease, deckIncrease;
+        -:   21:    
+        1:   22:    gameStateCreated=0;
+        1:   23:    smithyRun=0;
+        1:   24:    smithyNotRun=0;
+        1:   25:    handIncreased=0;   
+        1:   26:    handDecreased=0;   
+        1:   27:    handEqual=0;   
+        1:   28:    sameplayer=0;
+        1:   29:    differentplayer=0;
+        1:   30:    deckDecrease=0;
+        1:   31:    deckIncrease=0;
+        -:   32:    
+        -:   33:    
+        -:   34:    //create games tates
+        -:   35:    
+        -:   36:    struct gameState G;
+        -:   37:    struct gameState S;
+        -:   38:    
+        -:   39:
+     5001:   40:    for (int z=0; z < numTest; z++)
+        -:   41:    {
+        -:   42:        int returnValue;
+        -:   43:        
+        -:   44:        struct gameState G;
+        -:   45:        struct gameState S;
+        -:   46:         //change these variables to test
+        -:   47:        //select random amount of players between 2 and 4
+        -:   48:        //per dominip rules
+        -:   49:        int r, n, k;
+     5000:   50:        n=4;
+     5000:   51:        k=2;
+     5000:   52:        r = rand() % (n + 1) + k;
+     5000:   53:        int players=r;
+        -:   54:
+        -:   55:
+        -:   56:        //select random seed between 1-500
+        -:   57:
+     5000:   58:        n=500;
+     5000:   59:        k=1;
+     5000:   60:        r = rand() % (n + 1) + k;
+        -:   61:
+     5000:   62:        int randomSeed=r;
+     5000:   63:        int hand[10]={curse, smithy, mine, gardens, great_hall, salvager, sea_hag, adventurer, duchy, tribute};
+        -:   64:        
+     5000:   65:         returnValue=initializeGame(players,hand,randomSeed, &G);
+        -:   66:        
+     5000:   67:        if(returnValue == 0)
+        -:   68:            {
+     2983:   69:            gameStateCreated++;
+        -:   70:            //printf("**Gamestate Created**\n");  
+        -:   71:            //printf("\n");
+        -:   72:            }
+     5000:   73:        S=G;
+        -:   74:        //intial hand count
+     5000:   75:        int handCount1=G.handCount[1];
+     5000:   76:        int player1=G.whoseTurn;
+     5000:   77:        int deckCountInitial= G.deckCount[1];
+        -:   78:        //player should try three cards
+        -:   79:
+        -:   80:	
+        -:   81:	       //test valid input
+        -:   82:    
+     5000:   83:        returnValue = cardEffect(smithy, 0, 0, 0, &G, 10, 0);
+     5000:   84:         if(returnValue==0)
+        -:   85:        {
+        -:   86:        //printf("PASS:smithy run");
+        -:   87:        //printf("\n");
+     5000:   88:             smithyRun++;
+        -:   89:        }
+        -:   90:        
+     5000:   91:        if(returnValue!=0)
+        -:   92:        {
+        -:   93:        //printf("PASS:smithy run");
+        -:   94:        //printf("\n");
+    #####:   95:             smithyNotRun++;
+        -:   96:        }
+        -:   97:        
+        -:   98:        
+     5000:   99:        int handCount2=S.handCount[1];
+     5000:  100:        int player2=S.whoseTurn;
+     5000:  101:        int deckCountInitial2= S.deckCount[1];
+        -:  102:      //same hand?
+     5000:  103:        if(handCount2>=(handCount1+3)){
+    #####:  104:        handIncreased++;
+        -:  105:        }   
+        -:  106:        
+     5000:  107:        if(handCount2==handCount1){
+     5000:  108:        handEqual++;
+        -:  109:        }
+        -:  110:        
+     5000:  111:        if(handCount2<(handCount1+3)){
+     5000:  112:        handDecreased++;
+        -:  113:        }
+        -:  114:        //same player
+     5000:  115:        if(player1==player2){
+     5000:  116:        sameplayer++;
+        -:  117:        }
+        -:  118:
+     5000:  119:        if(player1!=player2){
+    #####:  120:        differentplayer++;
+        -:  121:        } 
+        -:  122:        
+        -:  123:        //deck count decreased    
+     5000:  124:        if(deckCountInitial>deckCountInitial2) {
+    #####:  125:           deckDecrease++; 
+        -:  126:        }
+        -:  127:        
+     5000:  128:        if(deckCountInitial<=deckCountInitial2) {
+     5000:  129:        deckIncrease++;
+        -:  130:        }
+        -:  131:        
+        -:  132:       
+        -:  133:        
+        -:  134:        
+        -:  135:    
+        -:  136:    }
+        1:  137:    printf("The Test was run %d times\n", numTest);
+        -:  138:    //printf("Game States Created:  %d\n", gameStateCreated);
+        1:  139:    printf("Card was successfully run:  %d\n", smithyRun);
+        1:  140:    printf("Fail: Card was UNsuccessfully run:  %d\n", smithyNotRun);
+        -:  141:    
+        1:  142:   printf("The Hand Increased (intended results):  %d\n", handIncreased);
+        1:  143:     printf("Fail: Hand did not increase, it decreased:  %d\n", handDecreased);
+        1:  144:       printf("Fail: Hand count is equal:  %d\n", handEqual);
+        -:  145:    
+        1:  146:      printf("Same player is active (intended result):  %d\n", sameplayer);
+        1:  147:     printf("Fail: Player should not change:  %d\n", differentplayer);
+        -:  148:    
+        1:  149:    printf("Deck count decreased (intended result):  %d\n", deckDecrease);
+        1:  150:     printf("Fail Deck count did not decrease:  %d\n", deckIncrease);
+        1:  151:     printf("\n >>>>> SUCCESS: Testing complete %s <<<<<\n\n", TESTCARD);
+        -:  152:        
+        -:  153:        
+        -:  154:  
+        -:  155:        
+        1:  156:	return 0;
+        -:  157:}
+        -:  158:    
