@@ -1,0 +1,107 @@
+        -:    0:Source:cardtest2.c
+        -:    0:Graph:cardtest2.gcno
+        -:    0:Data:cardtest2.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:/*This is the card test for the Greate hall
+        -:    2:
+        -:    3:int funcGreatHall(struct gameState *state, int currentPlayer, int handPos)
+        -:    4:        {
+        -:    5:          //+1 Card
+        -:    6:          drawCard(currentPlayer, state);
+        -:    7:
+        -:    8:          //+1 Actions
+        -:    9:            //bug at -- instead of ++
+        -:   10:          state->numActions--;
+        -:   11:
+        -:   12:          //discard card from hand
+        -:   13:          discardCard(handPos, currentPlayer, state, 0);
+        -:   14:          return 0;
+        -:   15:        }
+        -:   16:
+        -:   17:
+        -:   18://same player
+        -:   19://+1 Card (increase hand)
+        -:   20:    +1 Action(increase action)
+        -:   21:*/
+        -:   22:
+        -:   23:
+        -:   24:
+        -:   25:#include "dominion.h"
+        -:   26:#include <stdio.h>
+        -:   27:#include "rngs.h"
+        -:   28:#include <stdlib.h>
+        -:   29:#include "dominion_helpers.h"
+        -:   30:#include "assert.h"
+        -:   31:#define TESTCARD "Great Hall"
+        -:   32:
+        1:   33:int main(){
+        -:   34:    int returnValue;
+        -:   35:    struct gameState G;
+        -:   36:    //change these variables to test
+        1:   37:    int players=2;
+        1:   38:    int randomSeed=1;
+        1:   39:    int hand[10]={curse, smithy, mine, gardens, great_hall, salvager, sea_hag, adventurer, silver, gold};
+        -:   40:    //int initializeGame(int numPlayers, int kingdomCards[10], int randomSeed, struct gameState *state)
+        -:   41:    //create a hand to pass in
+        -:   42:    
+        -:   43:    
+        -:   44:    //if game is created, print 
+        1:   45:    returnValue=initializeGame(players,hand,randomSeed, &G);
+        1:   46:    assert(returnValue == 0);
+        -:   47:    {
+        1:   48:    printf("Card Test 2:\n");
+        1:   49:    printf("Great Hall:\n");
+        1:   50:    printf("**Gamestate Created**\n");  
+        1:   51:    printf("\n");
+        -:   52:    }
+        -:   53:    
+        -:   54:    
+        1:   55:    int player1=G.whoseTurn;
+        -:   56:    int player2;
+        1:   57:    int actions=G.numActions;
+        -:   58:    int actions2;
+        1:   59:    int handCount1=G.handCount[1];
+        -:   60:    int handCount2;
+        -:   61:    //same player
+        -:   62:    //+1 Card (increase hand)
+        -:   63:    //+1 Action(increase action)
+        -:   64:    int result;
+        1:   65:    result= cardEffect(great_hall, 0, 0, 0, &G, 10, 0);
+        1:   66:    if(result==0){
+        1:   67:    printf("PASS: Greathall ran");
+        1:   68:        printf("\n");
+        -:   69:    
+        1:   70:    player2=G.whoseTurn;
+        1:   71:    if(player1==player2){
+        1:   72:    printf("PASS: Same Player is Active");
+        1:   73:    printf("\n");}
+        -:   74:    
+        1:   75:    if(player1!=player2){
+    #####:   76:    printf("FAIL: Same Player is Active");
+    #####:   77:    printf("\n");} 
+        -:   78:        
+        1:   79:    actions2=G.numActions;
+        1:   80:    if(actions==actions2){
+    #####:   81:    printf("PASS: Same number of actions left");
+    #####:   82:    printf("\n");}
+        -:   83:        
+        1:   84:     if(actions!=actions2){
+        1:   85:    printf("FAIL: Same number of actions left");
+        1:   86:    printf("\n");}    
+        -:   87:    
+        1:   88:    handCount2=G.handCount[1];
+        1:   89:    if(handCount2==handCount1){
+        1:   90:    printf("PASS: Hand Count has increased");
+        1:   91:    printf("\n");}
+        -:   92:        
+        1:   93:    if(handCount2!=handCount1){
+    #####:   94:    printf("FAIL: Hand Count has increased");
+    #####:   95:    printf("\n");}    
+        -:   96:        
+        -:   97:    }
+        1:   98:    printf("\n >>>>> SUCCESS: Testing complete %s <<<<<\n\n", TESTCARD);
+        1:   99:     return 0;
+        -:  100:}
+        -:  101:         
+        -:  102:         

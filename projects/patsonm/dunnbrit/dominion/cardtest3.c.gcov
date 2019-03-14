@@ -1,0 +1,86 @@
+        -:    0:Source:cardtest3.c
+        -:    0:Graph:cardtest3.gcno
+        -:    0:Data:cardtest3.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:
+        -:    2:/*Michael Patson*/
+        -:    3://reveals cards from deck until two treasure
+        -:    4:
+        -:    5:
+        -:    6:#include "dominion.h"
+        -:    7:#include <stdio.h>
+        -:    8:#include "rngs.h"
+        -:    9:#include <stdlib.h>
+        -:   10:#include "dominion_helpers.h"
+        -:   11:#include "assert.h"
+        -:   12:
+        -:   13:#define TESTCARD "adventure"
+        -:   14:
+        -:   15:
+        1:   16:int main()
+        -:   17:{
+        -:   18:    
+        -:   19:    
+        -:   20:    int returnValue;
+        -:   21:    int count;
+        -:   22:    struct gameState G;
+        -:   23:    //change these variables to test
+        1:   24:    int players=2;
+        1:   25:    int randomSeed=1;
+        1:   26:    int hand[10]={curse, smithy, mine, gardens, great_hall, salvager, sea_hag, adventurer, duchy, tribute};
+        -:   27:    //int initializeGame(int numPlayers, int kingdomCards[10], int randomSeed, struct gameState *state)
+        -:   28:    //create a hand to pass in
+        -:   29:    
+        -:   30:    
+        1:   31:     printf("Card Test 3:\n");
+        1:   32:    printf("adventure :\n");
+        -:   33:    
+        -:   34:    //if game is created, print 
+        1:   35:    returnValue=initializeGame(players,hand,randomSeed, &G);
+        1:   36:    if(returnValue == 0){
+        -:   37:    {
+        -:   38:   
+        1:   39:    printf("**Gamestate Created**\n");  
+        1:   40:    printf("\n");
+        -:   41:    }
+        -:   42:	int intialHand;
+        1:   43:     intialHand= G.handCount[G.whoseTurn];
+        -:   44:	//check card value has changed
+        -:   45:    
+        -:   46:	
+        1:   47:    returnValue=cardEffect(adventurer, 0, 0, 0, &G, 10, 0);
+        1:   48:    if(returnValue==0){
+        1:   49:    printf("Pass: Card ran successfully");
+        1:   50:        printf("\n");}
+        -:   51:    
+        1:   52:     if(returnValue!=0){
+    #####:   53:    printf("FAIL: Card did not run successfully");
+    #####:   54:     printf("\n");}    
+        -:   55:        
+        -:   56:    int newHand;
+        1:   57:    newHand= G.handCount[G.whoseTurn];
+        1:   58:    if((intialHand+2)==newHand){
+    #####:   59:    printf("PASS: New hand is two more, two cards were drawn");
+    #####:   60:    printf("\n");}
+        1:   61:     if((intialHand+2)!=newHand){
+        1:   62:    printf("FAil: Two cards were not drawn");
+        1:   63:     printf("\n");}
+        -:   64:    int x;
+        9:   65:    for(x = 0; x < G.handCount[G.whoseTurn]; x++){
+        8:   66:		if (G.hand[G.whoseTurn][x] == copper || G.hand[G.whoseTurn][x] == silver || G.hand[G.whoseTurn][x] == gold){
+        7:   67:			count++;
+        -:   68:		}
+        -:   69:			
+        -:   70:        }
+        1:   71:	if(count==2){
+    #####:   72:    printf("PASS: Two Treasure Cards are in hand");
+    #####:   73:    printf("\n");}
+        1:   74:        if(count!=2){
+        1:   75:    printf("FAIL: There are not two treasure cards in hand");
+        1:   76:    printf("\n");}
+        -:   77:    }
+        1:   78:        printf("\n >>>>> SUCCESS: Testing complete %s <<<<<\n\n", TESTCARD);
+        -:   79:
+        1:   80:	return 0;
+        -:   81:}

@@ -1,0 +1,99 @@
+        -:    0:Source:unittest4.c
+        -:    0:Graph:unittest4.gcno
+        -:    0:Data:unittest4.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:/*TThis unit tests the getCostfunction
+        -:    2:*/
+        -:    3:
+        -:    4:#include "dominion.h"
+        -:    5:#include <stdio.h>
+        -:    6:#include "rngs.h"
+        -:    7:#include <stdlib.h>
+        -:    8:#include "dominion_helpers.h"
+        -:    9:#include "assert.h"
+        -:   10:
+        -:   11:
+        1:   12:int main(int argc, char ** argv)
+        -:   13:{
+        -:   14:    int returnValue, returnValue2;
+        -:   15:    
+        -:   16:    struct gameState G;
+        -:   17:    //change these variables to test
+        1:   18:    int players=2;
+        1:   19:    int randomSeed=1;
+        1:   20:    int hand[10]={curse, smithy, mine, gardens, great_hall, salvager, sea_hag, adventurer, silver, gold};
+        -:   21:    //int initializeGame(int numPlayers, int kingdomCards[10], int randomSeed, struct gameState *state)
+        -:   22:    //create a hand to pass in
+        -:   23:    
+        -:   24:     //if game is created, print 
+        1:   25:    returnValue=initializeGame(players,hand,randomSeed, &G);
+        1:   26:    assert(returnValue == 0);
+        -:   27:    {
+        1:   28:    printf("Unit Test 4:\n");
+        1:   29:    printf("**Gamestate Created**\n");  
+        1:   30:    printf("\n");
+        -:   31:    }
+        -:   32:    
+        -:   33:   
+        -:   34:	
+        -:   35:	//curse
+        1:   36:	returnValue = curse;
+        1:   37:	returnValue2 = getCost(returnValue);
+        1:   38:	if(returnValue2 == 0)
+        -:   39:    {
+        1:   40:    printf("Card 0, Curse, Success:\n");
+        -:   41:    }
+        1:   42:    if(returnValue2 != 0)
+        -:   43:    {
+    #####:   44:    printf("Card 0, Curse, Fail:\n");
+        -:   45:    }
+        -:   46:    
+        -:   47:    //estate
+        1:   48:    returnValue = estate;
+        1:   49:	returnValue2 = getCost(returnValue);
+        1:   50:	if(returnValue2 == 2)
+        -:   51:    {
+        1:   52:    printf("Card 2, Estate, Success:\n");
+        -:   53:    }
+        -:   54:    
+        1:   55:    if(returnValue2 != 2)
+        -:   56:       {
+    #####:   57:    printf("Card 0, Estate, Fail:\n");
+        -:   58:    }
+        -:   59:    
+        -:   60:    //duchy
+        1:   61:    returnValue = duchy;
+        1:   62:	returnValue2 = getCost(returnValue);
+        1:   63:	if(returnValue2 == 5){
+        -:   64:        
+        1:   65:    printf("Card 3, Duchy, Success:\n");
+        -:   66:    }
+        1:   67:    if(returnValue2 != 5){
+    #####:   68:    printf("Card 3, Duchy, Fail:\n");
+        -:   69:    }
+        -:   70:    
+        -:   71:    
+        -:   72:    //fakecard
+        1:   73:    returnValue = -1;
+        1:   74:	returnValue2 = getCost(returnValue);
+        1:   75:	if(returnValue2 == -1){
+        1:   76:    printf("Fake Card Success:\n");
+        -:   77:    }
+        1:   78:  if(returnValue2 != -1){
+    #####:   79:    printf("Fake Card Fail:\n");
+        -:   80:    }
+        -:   81:    
+        -:   82:    //test was a success
+        1:   83:     printf("This test was a success");
+        1:   84:    printf("\n");
+        1:   85:    printf("\n");
+        -:   86:  
+        1:   87:       return 0;
+        -:   88:       
+        -:   89:
+        -:   90:       }
+        -:   91:       
+        -:   92:
+        -:   93:       
+        -:   94:      

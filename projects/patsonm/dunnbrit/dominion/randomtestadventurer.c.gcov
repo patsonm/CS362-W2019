@@ -1,0 +1,146 @@
+        -:    0:Source:randomtestadventurer.c
+        -:    0:Graph:randomtestadventurer.gcno
+        -:    0:Data:randomtestadventurer.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:
+        -:    2:/*Michael Patson*/
+        -:    3://reveals cards from deck until two treasure
+        -:    4:
+        -:    5://This is the random test for the adventure card
+        -:    6://the time library is used to randomization
+        -:    7:
+        -:    8:#include "dominion.h"
+        -:    9:#include <stdio.h>
+        -:   10:#include "rngs.h"
+        -:   11:#include <stdlib.h>
+        -:   12:#include "dominion_helpers.h"
+        -:   13:#include "assert.h"
+        -:   14:#include <time.h>
+        -:   15:
+        -:   16:#define TESTCARD "adventure"
+        -:   17:
+        -:   18:
+        1:   19:int main()
+        -:   20:{
+        -:   21:    //set num of test here
+        1:   22:    int numTest =5000;
+        -:   23:    
+        -:   24:    //game counter varaibles
+        1:   25:    int gameStateCreated=0;
+        1:   26:    int cardRun=0;
+        1:   27:    int cardRunFail=0;
+        1:   28:    int cardFunctionFail=0;
+        1:   29:    int cardFunction=0;
+        1:   30:    int treasureFail=0;
+        1:   31:    int treasure=0;
+        -:   32:    
+        -:   33:    
+        -:   34:    struct gameState G;
+        -:   35:    struct gameState S;
+        -:   36:    
+     5001:   37:    for (int z=0; z < numTest; z++){
+        -:   38:    int returnValue;
+        -:   39:    int count;
+        -:   40:    //change these variables to test
+        -:   41:    //select random amount of players between 2 and 4
+        -:   42:    //per dominip rules
+        -:   43:    int r, n, k;
+     5000:   44:    n=4;
+     5000:   45:    k=2;
+     5000:   46:    r = rand() % (n + 1) + k;
+     5000:   47:    int players=r;
+        -:   48:    
+        -:   49:    
+        -:   50:    //select random seed between 1-500
+        -:   51:    
+     5000:   52:    n=50;
+     5000:   53:    k=1;
+     5000:   54:    r = rand() % (n + 1) + k;
+        -:   55:    
+     5000:   56:    int randomSeed=r;
+     5000:   57:    int hand[10]={curse, smithy, mine, gardens, great_hall, salvager, sea_hag, adventurer, duchy, tribute};
+        -:   58:    //int initializeGame(int numPlayers, int kingdomCards[10], int randomSeed, struct gameState *state)
+        -:   59:    //create a hand to pass in
+        -:   60:    
+        -:   61:    //if game is created, print 
+     5000:   62:    returnValue=initializeGame(players,hand,randomSeed, &G);
+        -:   63:    
+        -:   64:        
+        -:   65:        //set gamestates equal
+     5000:   66:    S=G;
+     5000:   67:    if(returnValue == 0){
+        -:   68:    {
+     2983:   69:    gameStateCreated++;
+        -:   70:    //printf("**Gamestate Created**\n");  
+        -:   71:    //printf("\n");
+        -:   72:    }
+        -:   73:	int intialHand;
+     2983:   74:     intialHand= G.handCount[G.whoseTurn];
+        -:   75:	//check card value has changed
+        -:   76:    
+        -:   77:	
+     2983:   78:    returnValue=cardEffect(adventurer, 0, 0, 0, &G, 10, 0);
+     2983:   79:    if(returnValue==0){
+        -:   80:    //printf("Pass: Card ran successfully");
+     2983:   81:        cardRun++;
+        -:   82:       // printf("\n");
+        -:   83:    }
+        -:   84:    
+     2983:   85:     if(returnValue!=0){
+        -:   86:    //printf("FAIL: Card did not run successfully");
+        -:   87:     //printf("\n");
+    #####:   88:         cardRunFail++;
+        -:   89:     }    
+        -:   90:        
+        -:   91:    int newHand;
+     2983:   92:    newHand= S.handCount[S.whoseTurn];
+     2983:   93:    if((intialHand+2)==newHand){
+        -:   94:    //printf("PASS: New hand is two more, two cards were drawn");
+        -:   95:    //printf("\n");
+    #####:   96:    cardFunction++;
+        -:   97:    }
+     2983:   98:     if((intialHand+2)!=newHand){
+        -:   99:    //printf("FAil: Two cards were not drawn");
+        -:  100:     //printf("\n");
+     2983:  101:      cardFunctionFail++;
+        -:  102:     }
+        -:  103:    int x;
+    26571:  104:    for(x = 0; x < G.handCount[G.whoseTurn]; x++){
+    23588:  105:		if (G.hand[G.whoseTurn][x] == copper || G.hand[G.whoseTurn][x] == silver || G.hand[G.whoseTurn][x] == gold){
+    20024:  106:			count++;
+        -:  107:		}
+        -:  108:			
+        -:  109:        }
+     2983:  110:	if(count==2){
+        -:  111:    //printf("PASS: Two Treasure Cards are in hand");
+        -:  112:    //printf("\n")
+    #####:  113:    treasure++;   
+        -:  114:        ;
+        -:  115:    }
+     2983:  116:        if(count!=2){
+        -:  117:    //printf("FAIL: There are not two treasure cards in hand");
+        -:  118:    //printf("\n");
+     2983:  119:    treasureFail++;        
+        -:  120:        }
+        -:  121:    }
+        -:  122:        //printf("\n >>>>> SUCCESS: Testing complete %s <<<<<\n\n", TESTCARD);
+        -:  123:    }
+        -:  124:    
+        -:  125:    
+        1:  126:    printf("Random Card Test :\n");
+        1:  127:    printf("Adventure :\n");
+        1:  128:    printf("The Test was run %d times\n", numTest);
+        -:  129:    //printf("Game States Created:  %d\n", gameStateCreated);
+        1:  130:    printf("Card was successfully run:  %d\n", cardRun);
+        1:  131:    printf("Card was UNsuccessfully run:  %d\n", cardRunFail);
+        1:  132:   printf("Two cards were successfully drawn:  %d\n", cardFunction);
+        1:  133:     printf("Two cards were UNsuccessfully drawn:  %d\n", cardFunctionFail);
+        1:  134:      printf("The treasure amount in hand increased by two:  %d\n", treasure);
+        1:  135:     printf("The treasure amount in hand did not increase:  %d\n", treasureFail);
+        1:  136:     printf("\n >>>>> SUCCESS: Testing complete %s <<<<<\n\n", TESTCARD);
+        -:  137:   
+        -:  138:    
+        -:  139:    
+        1:  140:	return 0;
+        -:  141:}

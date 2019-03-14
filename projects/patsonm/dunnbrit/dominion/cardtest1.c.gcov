@@ -1,0 +1,130 @@
+        -:    0:Source:cardtest1.c
+        -:    0:Graph:cardtest1.gcno
+        -:    0:Data:cardtest1.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:/*This is the card test for the smithy
+        -:    2:1. Current player should receive exactly 3 cards.
+        -:    3:
+        -:    4:2. 3 cards should come from his own pile.
+        -:    5:
+        -:    6:3. No state change should occur for other players.
+        -:    7:
+        -:    8:4. No state change should occur to the victory card piles and kingdom card piles.
+        -:    9:
+        -:   10:
+        -:   11:int funcSmithy(struct gameState *state, int handPos)
+        -:   12:{
+        -:   13:    int i = 0;
+        -:   14:    int currentPlayer = whoseTurn(state);
+        -:   15:      //+3 Cards
+        -:   16:    //BUG, <= was previouls <
+        -:   17:      for (i = 0; i <= 3; i++)
+        -:   18:	{
+        -:   19:	  drawCard(currentPlayer, state);
+        -:   20:	}
+        -:   21:			
+        -:   22:      //discard card from hand
+        -:   23:      discardCard(handPos, currentPlayer, state, 0);
+        -:   24:      return 0;
+        -:   25:}
+        -:   26:*/
+        -:   27:
+        -:   28:
+        -:   29:#include "dominion.h"
+        -:   30:#include <stdio.h>
+        -:   31:#include "rngs.h"
+        -:   32:#include <stdlib.h>
+        -:   33:#include "dominion_helpers.h"
+        -:   34:#include "assert.h"
+        -:   35:#include "time.h"
+        -:   36:#define TESTCARD "smithy"
+        -:   37:
+        1:   38:int main(){
+        -:   39:    int returnValue;
+        -:   40:    struct gameState G;
+        -:   41:    //change these variables to test
+        1:   42:    int players=2;
+        1:   43:    int randomSeed=1;
+        1:   44:    int hand[10]={curse, smithy, mine, gardens, great_hall, salvager, sea_hag, adventurer, silver, gold};
+        -:   45:    //int initializeGame(int numPlayers, int kingdomCards[10], int randomSeed, struct gameState *state)
+        -:   46:    //create a hand to pass in
+        -:   47:    
+        -:   48:    
+        -:   49:    //if game is created, print 
+        1:   50:    returnValue=initializeGame(players,hand,randomSeed, &G);
+        1:   51:    assert(returnValue == 0);
+        -:   52:    {
+        1:   53:    printf("Card Test 1:\n");
+        1:   54:    printf("Smithy:\n");
+        1:   55:    printf("**Gamestate Created**\n");  
+        1:   56:    printf("\n");
+        -:   57:    }
+        -:   58:    
+        -:   59:    //intial hand count
+        1:   60:    int handCount1=G.handCount[1];
+        1:   61:    int player1=G.whoseTurn;
+        1:   62:    int deckCountInitial= G.deckCount[1];
+        -:   63:    //player should try three cards
+        -:   64:  
+        -:   65:	
+        -:   66:	//test valid input
+        -:   67:    
+        1:   68:   returnValue = cardEffect(smithy, 0, 0, 0, &G, 10, 0);
+        -:   69:	//returnValue = smithyFunc(&G, 4);
+        -:   70:	
+        -:   71:	
+        1:   72:    if(returnValue==0)
+        -:   73:    {
+        1:   74:        printf("PASS:smithy run");
+        1:   75:        printf("\n");
+        -:   76:    }
+        -:   77:    
+        1:   78:    if(returnValue!=0)
+        -:   79:    {
+    #####:   80:        printf("FAIL: smithy not run");
+    #####:   81:        printf("\n");
+        -:   82:    }
+        -:   83:    //second hand count
+        1:   84:    int handCount2=G.handCount[1];
+        1:   85:    int player2=G.whoseTurn;
+        1:   86:    int deckCountInitial2= G.deckCount[1];
+        -:   87:    
+        1:   88:    if(handCount2>=(handCount1+3)){
+    #####:   89:        printf("PASS: Hand size was increased");
+    #####:   90:        printf("\n");
+        -:   91:    }
+        -:   92:    
+        1:   93:    if(handCount2==handCount1){
+        1:   94:        printf("FAIL: Hand size was not increased");
+        1:   95:        printf("\n");
+        -:   96:    }
+        -:   97:    
+        1:   98:    if(handCount2<=(handCount1+3)){
+        1:   99:        printf("PASS: Hand size was decreased");
+        1:  100:        printf("\n");
+        -:  101:    }
+        -:  102:    
+        -:  103:    //still same palyer is active
+        1:  104:    if(player1==player2){
+        1:  105:    printf("PASS: Same Player is Active");
+        1:  106:    printf("\n");
+        -:  107:    }
+        -:  108:    
+        1:  109:    if(player1!=player2){
+    #####:  110:    printf("FAIL: Same Player is not Active");
+    #####:  111:    printf("\n");
+        -:  112:    }       
+        -:  113:        
+        -:  114:    //deck count decreased    
+        1:  115:    if(deckCountInitial>deckCountInitial2) {
+    #####:  116:    printf("Pass: Deck was decreased");
+    #####:  117:    printf("\n");}
+        -:  118:        
+        1:  119:    if(deckCountInitial<deckCountInitial2) {
+    #####:  120:    printf("FAIL: Deck was NOT decreased");
+    #####:  121:    printf("\n");}
+        1:  122:	printf("\n >>>>> SUCCESS: Testing complete %s <<<<<\n\n", TESTCARD);
+        1:  123:	return 0;
+        -:  124:}
+        -:  125:    
